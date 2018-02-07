@@ -7,16 +7,15 @@
 </head>
 <body>
 
-  <div class="container">
-
-      <div class="sidenav">
-        <h3> Categories: <h3>
-        <a href="categories.php?category=1">Programming</a>
-        <a href="categories.php?category=2">In the News</a>
-        <a href="categories.php?category=3">Daily Life</a>
-        <a href="categories.php?category=4">Interesting</a>
-      </div>
-
+    <div class="sidenav">
+      <h3> Categories: <h3>
+      <a href="categories.php?category=1">Programming</a>
+      <a href="categories.php?category=2">In the News</a>
+      <a href="categories.php?category=3">Daily Life</a>
+      <a href="categories.php?category=4">Interesting</a>
+      <a href="categories.php?category=5">History</a>
+      <a href="categories.php?category=6">Technology</a>
+    </div>
 
     <div class="welcome">
       <h1> Welcome to AJ's Blog</h1>

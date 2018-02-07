@@ -37,11 +37,19 @@ require 'functions.php';
 
     //if form has been submitted process it
     if(isset($_POST['submit'])){
-
+      /*
         $_POST = array_map( 'stripslashes', $_POST );
 
         //collect form data
         extract($_POST);
+        */
+        $postTitle = $_POST['postTitle'];
+
+        $postDesc = $_POST['postDesc'];
+
+        $postCont = $_POST['postCont'];
+
+        $postCat = $_POST['postCat'];
 
         $postdate = date('Y-m-d H:i:s');
 
@@ -49,11 +57,11 @@ require 'functions.php';
         if($postTitle ==''){
             $error[] = 'Please enter the title.';
         }
-        /*
+
         if($postCat ==''){
             $error[] = 'Please enter the category.';
         }
-        */
+
         if($postDesc ==''){
             $error[] = 'Please enter the description.';
         }
@@ -68,13 +76,23 @@ require 'functions.php';
 
                 //insert into database
                 $pdo = connect_to_db();
-                $sendPost = "INSERT INTO blogarticles(title, description, content, postdate) " .
-                            "VALUES ('$postTitle', '$postDesc', '$postCont', '$postdate')";
-                $pdo->exec($sendPost);
 
-                //redirect to index page
-                header('Location: index.php?action=added');
-                exit;
+                  $sendPost = "INSERT INTO blogarticles(title, description, content, postdate) " .
+                              "VALUES ('$postTitle', '$postDesc', '$postCont', '$postdate')";
+                  $pdo->exec($sendPost);
+
+                $lastID = $pdo->lastInsertId();
+                //echo '<p class="error">lastid='.$last_id.'</p>';
+
+                foreach ($postCat as $cat) {
+                  $intCat = (int)$cat;
+                  $sendCat =  "INSERT INTO blogarticles_categories (article_id, category_id)" .
+                              "VALUES ('$lastID', '$intCat')";
+                              $pdo->exec($sendCat);
+                  }
+                  //redirect to index page
+                  header('Location: index.php?action=added');
+                  exit;
 
             } catch(PDOException $e) {
                 echo '<p class="error">'.$e->getMessage().'</p>';
@@ -98,13 +116,12 @@ require 'functions.php';
         <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
 
         <p><label>Category</label><br/>
-          <select name="postCat" >
-          <option value="1">Programming</option>
-          <option value="2">In the News</option>
-          <option value="3">Daily Life</option>
-          <option value="4">Interesting</option>
-          <?php if(isset($error)){ echo $_POST['postCat'];}?>
-          </select>
+        <input type="checkbox" name="postCat[]" value="1"> Programming<br>
+        <input type="checkbox" name="postCat[]" value="2" > In the News<br>
+        <input type="checkbox" name="postCat[]" value="3"> Daily Life<br>
+        <input type="checkbox" name="postCat[]" value="4" checked> Interesting<br>
+        <input type="checkbox" name="postCat[]" value="5"> History<br>
+        <input type="checkbox" name="postCat[]" value="6" > Technology<br>
         </p>
         <!--<input type='text' name='postCat' value='</?php if(isset($error)){ echo $_POST['postCat'];}?>'></p> -->
 

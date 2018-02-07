@@ -5,9 +5,8 @@ require 'dbconnect.php';
 function fetchNewsCategories( $article_id, $conn )
 {
   $request = $conn->prepare(" SELECT c.name FROM blogarticles_categories ac
-    JOIN blogarticles a
-    ON ac.article_id = a.id JOIN categories c
-    ON ac.category_id = c.id
+    JOIN blogarticles a ON ac.article_id = a.id
+    JOIN categories c ON ac.category_id = c.id
     WHERE a.id = $article_id ");
   return $request->execute() ? $request->fetchAll() : false;
 }
@@ -34,12 +33,15 @@ function getOtherArticles( $differ_id, $conn )
   return $request->execute(array($differ_id)) ? $request->fetchAll() : false;
 }
 
-
-function getCategories( $id_category, $conn )
+function getCategories( $category_id, $conn )
 {
-  $request =  $conn->prepare(" SELECT id, title, description, content, postdate
-    FROM blogarticles WHERE category_id = ? ORDER BY id DESC");
-  return $request->execute(array($id_category)) ? $request->fetchAll() : false;
+  $request =  $conn->prepare(" SELECT a.id, a.title, a.description, a.postdate
+    FROM blogarticles_categories ac
+    JOIN blogarticles a ON ac.article_id = a.id
+    JOIN categories c ON ac.category_id = c.id
+    WHERE c.id = ?
+    ORDER BY a.id DESC");
+  return $request->execute(array($category_id)) ? $request->fetchAll() : false;
 }
 
 ?>
