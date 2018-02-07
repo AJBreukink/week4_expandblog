@@ -64,7 +64,7 @@
 
           <?php } ?>
 
-          <h2><a href="readnews.php?postid=<?= $article->id ?>"><?= stripslashes($article->title) ?></a></h2>
+          <h2><a href="readnews.php?id=<?= $article->id ?>"><?= stripslashes($article->title) ?></a></h2>
           <p><?= stripslashes($article->description) ?></p>
           <p id="postdate" >Posted on <?= date('jS M Y H:i:s', strtotime($article->postdate)) ?> </p>
           <div id="betweenline"> </div>

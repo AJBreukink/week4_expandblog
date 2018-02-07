@@ -7,10 +7,9 @@ require 'functions.php';
   <meta charset="utf-8">
   <title>Add Post</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-
-  <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+  <!--<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script> -->
   <script>
-          tinymce.init({
+          /*tinymce.init({
               content_css : "inputstyle.css",
               selector: "textarea",
               plugins: [
@@ -20,7 +19,36 @@ require 'functions.php';
               ],
               toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
           });
+          */
 
+          shortcuts = {
+              "cg" : "CodeGorilla",
+              "js" : "JavaScript",
+              "aj" : "Arend-Jan",
+              "grn" : "Groningen",
+              "jdb" : "Jorik de Boer",
+              "jvd" : "Julia van Drunen",
+              "evd" : "Eelke van Dijk"
+          }
+
+          window.onload = function() {
+              var ta = document.getElementById("textinput");
+              var timer = 0;
+              var re = new RegExp("\\b(" + Object.keys(shortcuts).join("|") + ")\\b", "g");
+
+              update = function() {
+                  ta.value = ta.value.replace(re, function($0, $1) {
+                      return shortcuts[$1.toLowerCase()];
+                  });
+              }
+
+              ta.onkeydown = function() {
+                  clearTimeout(timer);
+                  timer = setTimeout(update, 200);
+
+              }
+
+          }
   </script>
 
 </head>
@@ -110,7 +138,10 @@ require 'functions.php';
     }
     ?>
     <div class="news-box">
+
       <form action='' method='post'>
+
+        </script>
 
         <p><label>Title</label><br />
         <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
@@ -123,13 +154,12 @@ require 'functions.php';
         <input type="checkbox" name="postCat[]" value="5"> History<br>
         <input type="checkbox" name="postCat[]" value="6" > Technology<br>
         </p>
-        <!--<input type='text' name='postCat' value='</?php if(isset($error)){ echo $_POST['postCat'];}?>'></p> -->
 
         <p><label>Description</label><br />
-        <textarea name='postDesc'><?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
+        <textarea id='textinput' name='postDesc' cols='100' rows='10'><?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
 
         <p><label>Content</label><br />
-        <textarea name='postCont'><?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
+        <textarea id='textinput' name='postCont' cols='100' rows='20'><?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
 
         <p><input type='submit' name='submit' value='Post'></p>
 
