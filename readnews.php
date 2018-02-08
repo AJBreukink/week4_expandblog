@@ -50,7 +50,7 @@
                 ?>
 
             <?php if (!empty($article) && $article) :
-
+                  //retrieve the categories attached to the article
                   $newsCategories = fetchNewsCategories($article->id, $dbh);
                       foreach ($newsCategories as $key => $cat) {
                   ?>
@@ -69,7 +69,7 @@
         <div class='comments'>
           <?php
           if (!empty($article) && $article) {
-            
+
               $newsComments = fetchComments($article->id, $dbh);
 
               if (!empty($newsComments) && $newsComments) {
@@ -79,8 +79,56 @@
                 ?>
                 <p> <em>A blog visitor said: </em><?= $comment->comment ?></p>
               <?php } }?>
-
         </div>
+        <br><hr>
+
+        <?php
+        if(isset($_POST['submit'])){
+          $postComment = $_POST['postComment'];
+
+          if($postComment ==''){
+              $error[] = 'Please enter your comment.';
+            }
+            if(!isset($error)){
+
+                try {
+
+                  //insert into database
+                  $pdo = connect_to_db();
+                  $sendComment = "INSERT INTO comments (comment) " .
+                                "VALUES ('$postComment')";
+                  $pdo->exec($sendComment);
+                  $lastID = $pdo->lastInsertId();
+
+                  $commentToArticle =
+                  "INSERT INTO blogarticles_comments (article_id, comment_id)" .
+                              "VALUES ('$id_article', '$lastID')";
+                  $pdo->exec($commentToArticle);
+
+                  header('Location: readnews.php?id='.$id_article);
+                  exit;
+
+            } catch(PDOException $e) {
+                echo '<p class="error">'.$e->getMessage().'</p>';
+            }
+          }
+        }
+        if(isset($error)){
+            foreach($error as $error){
+                echo '<p class="error">'.$error.'</p>';
+            }
+        }
+          ?>
+          <form action='' method='post'>
+
+            <p><label>Share your thoughts on this article:</label><br>
+
+            <textarea name='postComment' cols='70' rows='2'>
+              <?php if(isset($error)){ echo $_POST['postComment'];}?></textarea></p>
+
+            <p><input type='submit' name='submit' value='Post'></p>
+
+          </form>
 
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
@@ -96,8 +144,9 @@
                       <div id="category"><?= $cat->name ?></div>
                       <?php } ?>
 
-                <h2><a href="readnews.php?id=<?= $article->id ?>"><?= stripslashes($article->title) ?></a></h2>
+                <h2><?= stripslashes($article->title) ?></h2>
                 <p><?= stripslashes($article->description) ?></p>
+                <p><a href="readnews.php?id=<?= $article->id ?>"><em>Read more...</em></a></p>
                 <p id="postdate" >Posted on <?= date('jS M Y H:i:s', strtotime($article->postdate)) ?> </p>
                 <div id="betweenline"> </div>
           <?php

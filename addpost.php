@@ -112,6 +112,7 @@ require 'functions.php';
                 $lastID = $pdo->lastInsertId();
                 //echo '<p class="error">lastid='.$last_id.'</p>';
 
+                //send selected categories and attach to article by id
                 foreach ($postCat as $cat) {
                   $intCat = (int)$cat;
                   $sendCat =  "INSERT INTO blogarticles_categories (article_id, category_id)" .
@@ -140,8 +141,6 @@ require 'functions.php';
     <div class="news-box">
 
       <form action='' method='post'>
-
-        </script>
 
         <p><label>Title</label><br />
         <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
