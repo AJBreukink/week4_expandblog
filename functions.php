@@ -53,11 +53,18 @@ function getCategories( $category_id, $conn )
 //get comments belonging to give article by id
 function fetchComments( $article_id, $conn )
 {
-  $request = $conn->prepare(" SELECT cm.comment FROM blogarticles_comments acm
+  $request = $conn->prepare(" SELECT cm.id, cm.comment FROM blogarticles_comments acm
     JOIN blogarticles a ON acm.article_id = a.id
     JOIN comments cm ON acm.comment_id = cm.id
     WHERE a.id = $article_id ");
   return $request->execute() ? $request->fetchAll() : false;
 }
 
+//delete a comment
+function deleteComment ($comment_id, $conn)
+{
+  $request = $conn->prepare(" DELETE FROM blogarticles_comments
+    WHERE blogarticles_comments.id = $comment_id ");
+  return $request->execute() ? $request->fetchAll() : false;
+}
 ?>

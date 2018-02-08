@@ -47,9 +47,8 @@
                 }
 
 
-                ?>
 
-            <?php if (!empty($article) && $article) :
+                  if (!empty($article) && $article) :
                   //retrieve the categories attached to the article
                   $newsCategories = fetchNewsCategories($article->id, $dbh);
                       foreach ($newsCategories as $key => $cat) {
@@ -78,9 +77,32 @@
                   foreach ($newsComments as $key => $comment) {
                 ?>
                 <p> <em>A blog visitor said: </em><?= $comment->comment ?></p>
+                <button onclick="deleteComment(<?= $comment->id ?>)"
+                  style="cursor: pointer;" text-align="center">X</button>
+                <div id="betweenCommentsline"> </div>
+
               <?php } }?>
+
+          <script type="text/javascript">
+            function deleteComment(commentid) {
+             var xhr = new XMLHttpRequest();
+             var url = 'https://localhost/week4/deletecomment.php?id='+commentid;
+             //console.log(url);
+             var r = confirm("Deleting this comment");
+             if (r == true) {
+
+             xhr.open('post', url , true);
+             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+             xhr.send();
+             
+              } else {
+
+              }
+            }
+              </script>
+
         </div>
-        <br><hr>
+        <br>
 
         <?php
         if(isset($_POST['submit'])){
@@ -130,7 +152,7 @@
 
           </form>
 
-        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
         <h3>Other articles</h3>
         <div class="similar-posts">
