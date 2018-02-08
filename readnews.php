@@ -28,15 +28,15 @@
 
         <div class="news">
             <?php
-                // get requested article by its id
+                // get id of requested article
                 $dbh = connect_to_db();
                 $id_article;
                 if(isset($_GET['id'])){
                 $id_article = (int)$_GET['id'];
-              }
+                  }
                 $other_articles;
                 if ( !empty($id_article) && $id_article > 0) {
-                    // Fetch news
+                    // get the article by id
                     $article = getAnArticle( $id_article, $dbh );
                     $article = $article[0];
                     $other_articles = getOtherArticles( $id_article, $dbh );
@@ -64,12 +64,26 @@
 
             <?php endif?>
         </div>
-
         <hr>
-        <br>
-        <br>
-        <br>
-        <br>
+
+        <div class='comments'>
+          <?php
+          if (!empty($article) && $article) {
+            
+              $newsComments = fetchComments($article->id, $dbh);
+
+              if (!empty($newsComments) && $newsComments) {
+                  echo '<h4>Reader Comments</h4>';
+                }
+                  foreach ($newsComments as $key => $comment) {
+                ?>
+                <p> <em>A blog visitor said: </em><?= $comment->comment ?></p>
+              <?php } }?>
+
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <hr>
         <h3>Other articles</h3>
         <div class="similar-posts">
         <?php if ( !empty($other_articles) && $other_articles ) :

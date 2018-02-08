@@ -18,7 +18,7 @@
     </div>
 
     <?php
-      //fetch articles with selected category_id
+      //fetch articles with selected category id
       $dbh = connect_to_db();
       $catid;
       if(isset($_GET['category'])){

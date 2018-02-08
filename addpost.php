@@ -81,7 +81,7 @@ require 'functions.php';
 
         $postdate = date('Y-m-d H:i:s');
 
-        //very basic validation
+        //validation of sorts
         if($postTitle ==''){
             $error[] = 'Please enter the title.';
         }

@@ -31,23 +31,23 @@
           // Fetch news
           $news = fetchNews($dbh);
 
-          ?>
 
-    <?php if ( $news && !empty($news) ) :
+          //put in one by one descending
+          if ( $news && !empty($news) ) :
 
           foreach ($news as $key => $article) {
-
+            //attach categories
             $newsCategories = fetchNewsCategories($article->id, $dbh);
                 foreach ($newsCategories as $key => $cat) {
           ?>
           <div id="category"><?= $cat->name ?></div>
         <?php } ?>
-          <h2><a href="readnews.php?id=<?= $article->id ?>">
-          <?= stripslashes($article->title) ?></a></h2>
+          <h2><?= stripslashes($article->title) ?></a></h2>
           <p><?= stripslashes($article->description) ?></p>
+          <p><a href="readnews.php?id=<?= $article->id ?>"><em>Read more...</em></a></p>
           <p id="postdate" >Posted on <?= date('jS M Y H:i:s', strtotime($article->postdate)) ?> </p>
           <div id="betweenline"> </div>
-        <?php }//endforeach?>
+        <?php }?>
       <?php endif?>
 
         </div>
