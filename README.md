@@ -10,6 +10,4 @@ backlog: https://trello.com/b/2EF4DLYM/week-4-expand-blog
 voltooide UserStories:
  - [W3-006]
  - [W4-001] (shortcuts: "cg" : "CodeGorilla", "js" : "JavaScript", "aj" : "Arend-Jan", "grn" : "Groningen", "jdb" : "Jorik de Boer", "jvd" : "Julia van Drunen", "evd" : "Eelke van Dijk")
-
-UserStory work-in-progress:
-- [W4-002]
+ - [W4-002]
