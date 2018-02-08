@@ -1,7 +1,7 @@
 # week4_expandblog
 verdere uitbreiding van het blog van week 3
 
-online: http://wijzijncodegorilla.nl/arendjan/week4_expandblog/index.php
+online: http://wijzijncodegorilla.nl/arendjan/week4_expandblog/
 
 index/homepage en categories pagina tonen titel en omschrijving, titel is linkje naar readpost pagina met compleet artikel
 
