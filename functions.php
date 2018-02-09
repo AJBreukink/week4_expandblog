@@ -24,7 +24,7 @@ function fetchNewsCategories( $article_id, $conn )
 //retrieve full article text for given article by id (for readpost page)
 function getAnArticle( $id_article, $conn )
 {
-  $request =  $conn->prepare(" SELECT id, title, content, postdate
+  $request =  $conn->prepare(" SELECT id, title, content, postdate, enablecomments
     FROM blogarticles WHERE id = ? ");
   return $request->execute(array($id_article)) ? $request->fetchAll() : false;
 }

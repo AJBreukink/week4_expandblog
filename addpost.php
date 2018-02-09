@@ -21,34 +21,34 @@ require 'functions.php';
           });
           */
 
-          shortcuts = {
-              "cg" : "CodeGorilla",
-              "js" : "JavaScript",
-              "aj" : "Arend-Jan",
-              "grn" : "Groningen",
-              "jdb" : "Jorik de Boer",
-              "jvd" : "Julia van Drunen",
-              "evd" : "Eelke van Dijk"
-          }
+    shortcuts = {
+        "cg" : "CodeGorilla",
+        "js" : "JavaScript",
+        "aj" : "Arend-Jan",
+        "grn" : "Groningen",
+        "jdb" : "Jorik de Boer",
+        "jvd" : "Julia van Drunen",
+        "evd" : "Eelke van Dijk"
+    }
 
-          window.onload = function() {
-              var ta = document.getElementById("textinput");
-              var timer = 0;
-              var re = new RegExp("\\b(" + Object.keys(shortcuts).join("|") + ")\\b", "g");
+    window.onload = function() {
+        var ta = document.getElementById("textinput");
+        var timer = 0;
+        var re = new RegExp("\\b(" + Object.keys(shortcuts).join("|") + ")\\b", "g");
 
-              update = function() {
-                  ta.value = ta.value.replace(re, function($0, $1) {
-                      return shortcuts[$1.toLowerCase()];
-                  });
-              }
+        update = function() {
+            ta.value = ta.value.replace(re, function($0, $1) {
+                return shortcuts[$1.toLowerCase()];
+            });
+        }
 
-              ta.onkeydown = function() {
-                  clearTimeout(timer);
-                  timer = setTimeout(update, 200);
+        ta.onkeydown = function() {
+            clearTimeout(timer);
+            timer = setTimeout(update, 200);
 
-              }
+        }
 
-          }
+    }
   </script>
 
 </head>
@@ -81,6 +81,9 @@ require 'functions.php';
 
         $postdate = date('Y-m-d H:i:s');
 
+        $enableComments = $_POST['commentsYN'];
+        //echo '<p class="error">'.$enableComments.'</p>';
+
         //validation of sorts
         if($postTitle ==''){
             $error[] = 'Please enter the title.';
@@ -105,8 +108,10 @@ require 'functions.php';
                 //insert into database
                 $pdo = connect_to_db();
 
-                  $sendPost = "INSERT INTO blogarticles(title, description, content, postdate) " .
-                              "VALUES ('$postTitle', '$postDesc', '$postCont', '$postdate')";
+                  $sendPost =
+                    "INSERT INTO blogarticles
+                    (title, description, content, postdate, enablecomments) " .
+                    "VALUES ('$postTitle', '$postDesc', '$postCont', '$postdate', '$enableComments')";
                   $pdo->exec($sendPost);
 
                 $lastID = $pdo->lastInsertId();
@@ -143,7 +148,8 @@ require 'functions.php';
       <form action='' method='post'>
 
         <p><label>Title</label><br />
-        <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
+        <input type='text' name='postTitle'
+          value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
 
         <p><label>Category</label><br/>
         <input type="checkbox" name="postCat[]" value="1"> Programming<br>
@@ -155,10 +161,16 @@ require 'functions.php';
         </p>
 
         <p><label>Description</label><br />
-        <textarea id='textinput' name='postDesc' cols='100' rows='10'><?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
+        <textarea id='textinput' name='postDesc' cols='100' rows='10'>
+          <?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
 
         <p><label>Content</label><br />
-        <textarea id='textinput' name='postCont' cols='100' rows='20'><?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
+        <textarea id='textinput' name='postCont' cols='100' rows='20'>
+          <?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
+
+        <p><label>Allow comments? </label>
+        <input type="radio" name="commentsYN" value="1" checked> Yes
+        <input type="radio" name="commentsYN" value="0"> No </p>
 
         <p><input type='submit' name='submit' value='Post'></p>
 

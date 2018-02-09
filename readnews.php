@@ -39,6 +39,8 @@
                     // get the article by id
                     $article = getAnArticle( $id_article, $dbh );
                     $article = $article[0];
+                    $commentsYesNo = $article->enablecomments;
+                    //echo '<p class="error">comments='.$commentsYesNo.'</p>';
                     $other_articles = getOtherArticles( $id_article, $dbh );
 
                 }else{
@@ -68,7 +70,8 @@
         <div class='comments'>
           <?php
           if (!empty($article) && $article) {
-
+            //comments allowed yes/no (1=yes)
+            if ($commentsYesNo == 1) {
               $newsComments = fetchComments($article->id, $dbh);
 
               if (!empty($newsComments) && $newsComments) {
@@ -81,20 +84,34 @@
                   style="cursor: pointer;" text-align="center">X</button>
                 <div id="betweenCommentsline"> </div>
 
-              <?php } }?>
+              <?php } ?>
+              <form action='' method='post'>
+
+              <p><label>Share your thoughts on this article:</label><br>
+
+              <textarea name='postComment' cols='70' rows='2'>
+              <?php if(isset($error)){ echo $_POST['postComment'];}?></textarea></p>
+
+              <p><input type='submit' name='submit' value='Post'></p>
+
+              </form>
+            <?php } else{echo '<h4><em>Comments Disabled</em></h4>';} }?>
 
           <script type="text/javascript">
+            //comment delete button
             function deleteComment(commentid) {
              var xhr = new XMLHttpRequest();
              var url = 'https://localhost/week4/deletecomment.php?id='+commentid;
              //console.log(url);
-             var r = confirm("Deleting this comment");
+             var r = confirm("Delete this comment?");
              if (r == true) {
 
-             xhr.open('post', url , true);
+             xhr.open('post', url , false);
              xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
              xhr.send();
-             
+
+             location.reload();
+
               } else {
 
               }
@@ -141,16 +158,6 @@
             }
         }
           ?>
-          <form action='' method='post'>
-
-            <p><label>Share your thoughts on this article:</label><br>
-
-            <textarea name='postComment' cols='70' rows='2'>
-              <?php if(isset($error)){ echo $_POST['postComment'];}?></textarea></p>
-
-            <p><input type='submit' name='submit' value='Post'></p>
-
-          </form>
 
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
