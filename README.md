@@ -11,4 +11,5 @@ voltooide UserStories:
  - [W3-006]
  - [W4-001] (shortcuts: "cg" : "CodeGorilla", "js" : "JavaScript", "aj" : "Arend-Jan", "grn" : "Groningen", "jdb" : "Jorik de Boer", "jvd" : "Julia van Drunen", "evd" : "Eelke van Dijk")
  - [W4-002]
+ - [W4-003]
  - [W4-004]
