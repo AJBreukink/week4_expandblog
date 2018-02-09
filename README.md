@@ -3,7 +3,7 @@ verdere uitbreiding van het blog van week 3
 
 online: http://wijzijncodegorilla.nl/arendjan/week4_expandblog/
 
-index/homepage en categories pagina tonen titel en omschrijving, 'Read More..' is linkje naar readpost pagina met compleet artikel en de comments
+index/homepage en category filter tonen titel en omschrijving, 'Read More..' is linkje naar readpost pagina met compleet artikel en de comments
 
 backlog: https://trello.com/b/2EF4DLYM/week-4-expand-blog
 
