@@ -48,8 +48,6 @@
                     echo "<strong>Verkeerd Artikel!</strong>";
                 }
 
-
-
                   if (!empty($article) && $article) :
                   //retrieve the categories attached to the article
                   $newsCategories = fetchNewsCategories($article->id, $dbh);

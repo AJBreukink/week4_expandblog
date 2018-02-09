@@ -48,13 +48,21 @@ html, body {
     border: 6px solid #EEAA78;
 }
 
+.sidenav button {
+  width: 150px;
+}
+
+#Div1, #Div2, #Div3, #Div4, #Div5, #Div6 {
+  display: none;
+}
+
 #betweenline {
   border-bottom: 2px solid #B37D4E;
 }
 
 #betweenCommentsline {
   border-bottom: 2px dashed grey;
-  margin-left: 110px;
+  margin-left: 160px;
   margin-right: 60px;
 }
 
