@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>AJ Blog</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="script.js"></script>
 </head>
 <body>
 
@@ -87,34 +88,12 @@
 
               <p><label>Share your thoughts on this article:</label><br>
 
-              <textarea name='postComment' cols='70' rows='2'>
-              <?php if(isset($error)){ echo $_POST['postComment'];}?></textarea></p>
+              <textarea name='postComment' cols='70' rows='2'><?php if(isset($error)){ echo $_POST['postComment'];}?></textarea></p>
 
               <p><input type='submit' name='submit' value='Post'></p>
 
               </form>
             <?php } else{echo '<h4><em>Comments Disabled</em></h4>';} }?>
-
-          <script type="text/javascript">
-            //comment delete button
-            function deleteComment(commentid) {
-             var xhr = new XMLHttpRequest();
-             var url = 'https://localhost/week4/deletecomment.php?id='+commentid;
-             //console.log(url);
-             var r = confirm("Delete this comment?");
-             if (r == true) {
-
-             xhr.open('post', url , false);
-             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-             xhr.send();
-
-             location.reload();
-
-              } else {
-
-              }
-            }
-              </script>
 
         </div>
         <br>
